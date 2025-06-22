@@ -1,0 +1,44 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Signup</mat-card-title>
+  </mat-card-header>
+  <form (submit)="onSubmit(form)" #form="ngForm">
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>E-Mail</mat-label>
+        <input
+          matInput
+          type="email"
+          name="email"
+          ngModel
+          #emailInput="ngModel"
+          required
+          email
+          maxlength="128"
+        />
+        <mat-error>Please enter a valid email (max 128 characters)!</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Password</mat-label>
+        <input
+          matInput
+          type="password"
+          name="password"
+          ngModel
+          #passwordInput="ngModel"
+          required
+          maxlength="128"
+          minlength="8"
+        />
+        <mat-error>Please enter a valid password (8-128 characters)!</mat-error>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      @if (isLoading) {
+      <mat-spinner></mat-spinner>
+      } @else {
+      <button mat-raised-button color="primary">Signup</button>
+      }
+    </mat-card-actions>
+  </form>
+</mat-card>

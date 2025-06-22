@@ -1,0 +1,1 @@
+This is a portfolio app and not a fully released customer version which uses http.
