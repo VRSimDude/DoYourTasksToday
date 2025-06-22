@@ -1,0 +1,45 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Profile</mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    >Change your Password (after changing new Login is required):
+  </mat-card-content>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>New Password</mat-label>
+      <input
+        matInput
+        type="password"
+        name="password"
+        ngModel
+        #passwordInput="ngModel"
+        required
+        maxlength="128"
+        minlength="8"
+        [(ngModel)]="newPassword"
+      />
+      <mat-error>Please enter a valid password (8-128 characters)!</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="onChangePassword()">
+      Save new password
+    </button>
+</mat-card-content>
+@if (isRememberLogin) {
+      <mat-divider></mat-divider>
+  <mat-card-content
+    >You currently stay loggedin and save your Login data. You can redo that
+    here:
+    <button mat-raised-button color="primary" (click)="onForgetLogin()">
+      Do not stay logged in
+    </button>
+  </mat-card-content>
+  }
+<mat-divider></mat-divider>
+  <mat-card-content
+    >Here you can delete all your Data (Account & Tasks). This cannot be undone!
+    <button mat-raised-button color="warn" (click)="onDeleteData()">
+      Delete all my data
+    </button>
+  </mat-card-content>
+</mat-card>

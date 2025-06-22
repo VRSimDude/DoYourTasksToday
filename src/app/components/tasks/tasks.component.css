@@ -1,0 +1,113 @@
+.header {
+  display: inline-flex;
+  width: 100%;
+  height: 78px;
+}
+
+mat-form-field {
+  margin-right: 5%;
+}
+
+.header button {
+  height: 56px;
+  width: 25%;
+  margin-right: 5%;
+  margin-left: 2.5%;
+}
+
+button {
+  display: inline-flex;
+  width: 100%;
+}
+
+h1 {
+  padding: 8px;
+  text-align: center;
+}
+
+.accordion {
+  height: 80vh;
+  width: 100%;
+  border-radius: 1rem;
+  background-color: beige;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.accordion::-webkit-scrollbar {
+  display: none;
+}
+
+p {
+  overflow-wrap: break-word;
+  white-space: pre-line;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+mat-card-actions {
+  background-color: aliceblue;
+}
+
+mat-card-actions a,
+mat-card-actions button {
+  background-color: aliceblue;
+  display: inline-flex;
+  width: 20%;
+}
+
+.order {
+  display: flex;
+}
+
+.done {
+  background-color: #90ee90;
+}
+
+/*---------- responsive ----------*/
+
+/*
+smartphone
+*/
+@media only screen and (max-device-width: 800px) {
+  .row {
+    display: flex;
+    flex-flow: row nowrap;
+    width: 100vw;
+    overflow-x: scroll;
+  }
+
+  .column {
+    width: 90vw;
+    height: 70vh;
+    margin-right: 5vw;
+    margin-left: 5vw;
+    overflow-y: auto;
+    flex: none;
+    flex-grow: 1;
+  }
+}
+
+/*
+display and min width 801px
+*/
+@media only screen and (min-width: 801px) and (min-device-width: 801px) {
+  .header button {
+    margin-left: 0;
+  }
+
+  .row {
+    width: 100%;
+    display: inline-flex;
+  }
+
+  .column {
+    flex: 1 100%;
+    height: 80vh;
+    margin-right: 1rem;
+    overflow: hidden;
+  }
+}

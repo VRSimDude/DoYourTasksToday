@@ -1,0 +1,309 @@
+<div class="header">
+  <button mat-raised-button color="primary" routerLink="/create">
+    Add new task
+  </button>
+  <mat-form-field>
+    <mat-label>Sort by</mat-label>
+    <mat-select [(value)]="sortBy" (selectionChange)="onSortAllTasks()">
+      <mat-option value="">Default (Order)</mat-option>
+      <mat-option value="date">Date</mat-option>
+      <mat-option value="priority">Priority</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Ascending / Descending</mat-label>
+    <mat-select [(value)]="sortAscending" (selectionChange)="onSortAllTasks()">
+      <mat-option [value]="true">Ascending</mat-option>
+      <mat-option [value]="false">Descending</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div class="row">
+  <div class="column">
+    <h1>Backlog</h1>
+    <div class="accordion">
+      <mat-accordion>
+        @if(isLoading) {
+        <mat-spinner></mat-spinner>
+        } @else { @for (task of backlogTasks; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            @if(task.dueDate) {
+            <mat-panel-title
+              >{{ task.title + " (" + task.priority + ")" }}<br />Due Date:
+              {{ task.dueDate | date : "dd/MM/yyyy" }}</mat-panel-title
+            >
+            } @else {
+            <mat-panel-title>{{
+              task.title + " (" + task.priority + ")"
+            }}</mat-panel-title>
+            }
+          </mat-expansion-panel-header>
+          @if(task.description) {
+          <mat-divider></mat-divider>
+          <h3>Description:</h3>
+          <p>{{ task.description }}</p>
+          }
+          <mat-card-actions>
+            <a
+              mat-button
+              matTooltip="Edit Task"
+              [routerLink]="['/edit', task._id]"
+              ><mat-icon>edit</mat-icon></a
+            >
+            <button
+              mat-button
+              matTooltip="Move Task to Todo"
+              (click)="onSwitchTaskToTodo(task)"
+            >
+              <mat-icon>list</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Move Task to In Progress"
+              (click)="onSwitchTaskToProgress(task)"
+            >
+              <mat-icon>assignment</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Complete Task"
+              (click)="onCompleteTask(task)"
+            >
+              <mat-icon>done_all</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Delete Task"
+              (click)="onDeleteTask(task._id)"
+            >
+              <mat-icon color="warn">delete_forever</mat-icon>
+            </button>
+          </mat-card-actions>
+          @if(!sortBy) {
+          <mat-card-actions>
+            @if(task._id !== backlogTasks[0]._id) {
+            <button
+              mat-button
+              matTooltip="Move Up"
+              (click)="onMoveTaskUp(task)"
+            >
+              <mat-icon class="order">arrow_upward</mat-icon>
+            </button>
+            } @if(task._id !== backlogTasks[backlogTasks.length - 1]._id) {
+            <button
+              mat-button
+              matTooltip="Move Down"
+              (click)="onMoveTaskDown(task)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            }
+          </mat-card-actions>
+          }
+        </mat-expansion-panel>
+        } }
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="column">
+    <h1>Todo</h1>
+    <div class="accordion">
+      <mat-accordion>
+        @if(isLoading) {
+        <mat-spinner></mat-spinner>
+        } @else { @for (task of todoTasks; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            @if(task.dueDate) {
+            <mat-panel-title
+              >{{ task.title + " (" + task.priority + ")" }}<br />Due Date:
+              {{ task.dueDate | date : "dd/MM/yyyy" }}</mat-panel-title
+            >
+            } @else {
+            <mat-panel-title>{{
+              task.title + " (" + task.priority + ")"
+            }}</mat-panel-title>
+            }
+          </mat-expansion-panel-header>
+          @if(task.description) {
+          <mat-divider></mat-divider>
+          <h3>Description:</h3>
+          <p>{{ task.description }}</p>
+          }
+          <mat-card-actions>
+            <a
+              mat-button
+              matTooltip="Edit Task"
+              [routerLink]="['/edit', task._id]"
+              ><mat-icon>edit</mat-icon></a
+            >
+            <button
+              mat-button
+              matTooltip="Move Task to Backlog"
+              (click)="onSwitchTaskToBacklog(task)"
+            >
+              <mat-icon>content_paste</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Move Task to In Progress"
+              (click)="onSwitchTaskToProgress(task)"
+            >
+              <mat-icon>assignment</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Complete Task"
+              (click)="onCompleteTask(task)"
+            >
+              <mat-icon>done_all</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Delete Task"
+              (click)="onDeleteTask(task._id)"
+            >
+              <mat-icon color="warn">delete_forever</mat-icon>
+            </button>
+          </mat-card-actions>
+          @if(!sortBy) {
+          <mat-card-actions>
+            @if(task._id !== todoTasks[0]._id) {
+            <button
+              mat-button
+              matTooltip="Move Up"
+              (click)="onMoveTaskUp(task)"
+            >
+              <mat-icon class="order">arrow_upward</mat-icon>
+            </button>
+            } @if(task._id !== todoTasks[todoTasks.length - 1]._id) {
+            <button
+              mat-button
+              matTooltip="Move Down"
+              (click)="onMoveTaskDown(task)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            }
+          </mat-card-actions>
+          }
+        </mat-expansion-panel>
+        } }
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="column">
+    <h1>In Progress</h1>
+    <div class="accordion">
+      <mat-accordion>
+        @if(isLoading) {
+        <mat-spinner></mat-spinner>
+        } @else { @for (task of progressTasks; track $index) {
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            @if(task.dueDate) {
+            <mat-panel-title
+              >{{ task.title + " (" + task.priority + ")" }}<br />Due Date:
+              {{ task.dueDate | date : "dd/MM/yyyy" }}</mat-panel-title
+            >
+            } @else {
+            <mat-panel-title>{{
+              task.title + " (" + task.priority + ")"
+            }}</mat-panel-title>
+            }
+          </mat-expansion-panel-header>
+          @if(task.description) {
+          <mat-divider></mat-divider>
+          <h3>Description:</h3>
+          <p>{{ task.description }}</p>
+          }
+          <mat-card-actions>
+            <a
+              mat-button
+              matTooltip="Edit Task"
+              [routerLink]="['/edit', task._id]"
+              ><mat-icon>edit</mat-icon></a
+            >
+            <button
+              mat-button
+              matTooltip="Move Task to Backlog"
+              (click)="onSwitchTaskToBacklog(task)"
+            >
+              <mat-icon>content_paste</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Move Task to Todo"
+              (click)="onSwitchTaskToTodo(task)"
+            >
+              <mat-icon>list</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Complete Task"
+              (click)="onCompleteTask(task)"
+            >
+              <mat-icon>done_all</mat-icon>
+            </button>
+            <button
+              mat-button
+              matTooltip="Delete Task"
+              (click)="onDeleteTask(task._id)"
+            >
+              <mat-icon color="warn">delete_forever</mat-icon>
+            </button>
+          </mat-card-actions>
+          @if(!sortBy) {
+          <mat-card-actions>
+            @if(task._id !== progressTasks[0]._id) {
+            <button
+              mat-button
+              matTooltip="Move Up"
+              (click)="onMoveTaskUp(task)"
+            >
+              <mat-icon class="order">arrow_upward</mat-icon>
+            </button>
+            } @if(task._id !== progressTasks[progressTasks.length - 1]._id) {
+            <button
+              mat-button
+              matTooltip="Move Down"
+              (click)="onMoveTaskDown(task)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+            </button>
+            }
+          </mat-card-actions>
+          }
+        </mat-expansion-panel>
+        } }
+      </mat-accordion>
+    </div>
+  </div>
+  <div class="column">
+    <h1>Done</h1>
+    <div class="accordion">
+      <mat-accordion>
+        @if(isLoading) {
+        <mat-spinner></mat-spinner>
+        } @else { @for (task of doneTasks; track $index) {
+        <mat-expansion-panel class="done">
+          <mat-expansion-panel-header>
+            <mat-panel-title>{{ task.title }}</mat-panel-title>
+          </mat-expansion-panel-header>
+          @if(task.description) {
+          <h3>Description:</h3>
+          <p>{{ task.description }}</p>
+          } @if(task.priority) {
+          <mat-divider></mat-divider>
+          <h3>Priority: {{ task.priority }}</h3>
+          } @if(task.dueDate) {
+          <mat-divider></mat-divider>
+          <h3>Due Date: {{ task.dueDate | date : "dd/MMM/yyyy" }}</h3>
+          }
+        </mat-expansion-panel>
+        } }
+      </mat-accordion>
+    </div>
+  </div>
+</div>
