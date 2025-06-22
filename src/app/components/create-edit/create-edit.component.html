@@ -1,0 +1,80 @@
+<mat-card class="example-card" appearance="outlined">
+  <mat-card-header>
+    @if(isCreateMode) {
+    <mat-card-title>Create a task</mat-card-title>
+    } @else {
+    <mat-card-title>Edit task</mat-card-title>
+    }
+  </mat-card-header>
+  @if(isLoading) {
+  <mat-spinner></mat-spinner>
+  } @else {
+  <form (submit)="onSubmit(form)" #form="ngForm">
+    <mat-card-content>
+      <mat-form-field>
+        <mat-label>Title</mat-label>
+        <input
+          matInput
+          type="text"
+          name="title"
+          ngModel
+          #titleInput="ngModel"
+          required
+          text
+          maxlength="128"
+          [(ngModel)]="title"
+        />
+        <mat-error>Please enter a title!</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Description (max. 500)</mat-label>
+        <textarea
+          matInput
+          type="textarea"
+          name="description"
+          rows="5"
+          ngModel
+          white-space
+          maxlength="500"
+          [(ngModel)]="description"
+        ></textarea>
+        <mat-error>Description max length is 500 characters</mat-error>
+      </mat-form-field>
+      <mat-form-field class="priority">
+        <mat-label>Select a priority</mat-label>
+        <mat-select [(value)]="priority">
+          <mat-option value="urgent">Urgent</mat-option>
+          <mat-option value="high">High</mat-option>
+          <mat-option value="medium">Medium</mat-option>
+          <mat-option value="low">Low</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="dueDate">
+        <mat-label>Choose a due date</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          [value]="dueDate"
+          (dateChange)="dueDate = $event.value"
+        />
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions>
+      @if(isCreateMode) {
+      <button mat-raised-button color="primary">Create</button>
+      } @else {
+      <button mat-raised-button color="primary">Update</button>
+      }
+    </mat-card-actions>
+  </form>
+  <button mat-raised-button color="secondary" (click)="onCancel()">
+    Cancel
+  </button>
+  }
+</mat-card>

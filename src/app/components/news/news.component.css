@@ -1,0 +1,25 @@
+mat-toolbar {
+  position: fixed;
+  display: block;
+  left: 0;
+  bottom: 0;
+}
+
+p {
+  display: flex;
+  width: 100%;
+  padding-top: 1rem;
+  justify-content: center;
+  font-size: 12px;
+}
+
+/*---------- responsive ----------*/
+
+/*
+display and min width 801px
+*/
+@media only screen and (min-width: 801px) and (min-device-width: 801px) {
+  p {
+    font-size: 16px;
+  }
+}
