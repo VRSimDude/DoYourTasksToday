@@ -1,0 +1,34 @@
+mat-card {
+  width: 80%;
+  margin: auto;
+}
+
+mat-card-header {
+  width: 100%;
+  justify-content: center;
+}
+
+mat-card-actions,
+mat-form-field,
+button {
+  width: 100%;
+}
+
+mat-card-content {
+  margin-top: 1rem;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+/*---------- responsive ----------*/
+
+/*
+display and min width 801px
+*/
+@media only screen and (min-width: 801px) and (min-device-width: 801px) {
+  mat-card {
+    width: 50%;
+  }
+}
